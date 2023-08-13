@@ -35,8 +35,16 @@ async function viewEmployees() {
     return rows;
 }
 
+async function addEmployee(firstName, lastName, roleId, managerId) {
+    await connection.execute('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, roleId, managerId || null]);
+}
+
+async function updateEmployeeRole(employeeId, roleId) {
+    await connection.execute('UPDATE employees SET role_id = ? WHERE id = ?', [roleId, employeeId]);
+}
+
 async function closeConnection() {
     await connection.end();
 }
 
-module.exports = { initializeConnection, viewDepartments, addDepartment, closeConnection };
+module.exports = { initializeConnection, viewDepartments, addDepartment, viewRoles, addRole, viewEmployees, addEmployee, updateEmployeeRole, closeConnection };

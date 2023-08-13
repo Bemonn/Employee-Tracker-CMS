@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const db = require('./database');
 
 function mainMenu() {
     return inquirer.prompt([
@@ -51,18 +52,43 @@ function addRole() {
     ]);
 }
 
-function addEmployee() {
+async function addEmployee() {
+    const roles = await db.viewRoles();
+    const employees = await db.viewEmployees();
+
     return inquirer.prompt([
         {
-            type: 'input',
-            name: 'firstName',
-            message: 'What is the employee\'s first name?'
+            type: 'list',
+            name: 'role',
+            message: 'What is the employee\'s role?',
+            choices: roles.map(role => ({ name: role.title, value: role.id }))
         },
         {
-            type: 'input',
-            name: 'lastName',
-            message: 'What is the employee\'s last name?'
+            type: 'list',
+            name: 'manager',
+            message: 'Who is the employee\'s manager?',
+            choices: employees.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id })).concat({ name: 'None', value: null })
+        }
+    ]);
+}
+
+async function updateEmployeeRole() {
+    const roles = await db.viewRoles();
+    const employees = await db.viewEmployees();
+
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employee',
+            message: 'Which employee do you want to update?',
+            choices: employees.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
         },
+        {
+            type: 'list',
+            name: 'role',
+            message: 'Select the new role:',
+            choices: roles.map(role => ({ name: role.title, value: role.id }))
+        }
     ]);
 }
 
@@ -70,6 +96,6 @@ module.exports = {
     mainMenu,
     addDepartment,
     addRole,
-    addEmployee
+    addEmployee,
+    updateEmployeeRole
 };
-
