@@ -15,6 +15,26 @@ async function addDepartment(name) {
     await connection.execute('INSERT INTO departments (name) VALUES (?)', [name]);
 }
 
+async function viewRoles() {
+    const [rows] = await connection.execute('SELECT * FROM roles');
+    return rows;
+}
+
+async function addRole(name, salary, departmentId) {
+    await connection.execute('INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)', [name, salary, departmentId]);
+}
+
+async function viewEmployees() {
+    const [rows] = await connection.execute(`
+        SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager 
+        FROM employees 
+        LEFT JOIN roles ON employees.role_id = roles.id 
+        LEFT JOIN departments ON roles.department_id = departments.id 
+        LEFT JOIN employees manager ON employees.manager_id = manager.id
+    `);
+    return rows;
+}
+
 async function closeConnection() {
     await connection.end();
 }
