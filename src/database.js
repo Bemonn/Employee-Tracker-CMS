@@ -1,21 +1,22 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-//Connection settings
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Tb19122001',
-    database: 'CMS'
-});
+let connection;
 
-//Connect to database
-connection.connect((err) => {
-    if (err) {
-        console.error("Error connecting to the database:", err.stack);
-        return;
-    }
-    console.log("Connected to the database!");
-});
+async function initializeConnection() {
+    connection = await mysql.createConnection({ host: 'localhost', user: 'root', password: 'Tb19122001', database: 'CMS' });
+}
 
-//Export connection
-module.exports = connection;
+async function viewDepartments() {
+    const [rows] = await connection.execute('SELECT * FROM departments');
+    return rows;
+}
+
+async function addDepartment(name) {
+    await connection.execute('INSERT INTO departments (name) VALUES (?)', [name]);
+}
+
+async function closeConnection() {
+    await connection.end();
+}
+
+module.exports = { initializeConnection, viewDepartments, addDepartment, closeConnection };
