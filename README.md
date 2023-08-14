@@ -30,12 +30,12 @@
   ## Usage
   The user needs to open the intergrated terminal within the src folder and then run 'node index.js', the user will then be prompted with the following screen:
 
-
+  ![tracker1](https://github.com/Bemonn/Employee-Tracker-CMS/assets/132788160/1302d9c1-ef12-4206-85fa-204593d0f85d) 
 
 
   The user can then navigate using arrow keys to select any prompt they want:
 
-
+  ![tracker2](https://github.com/Bemonn/Employee-Tracker-CMS/assets/132788160/ae141599-0bdc-4d54-b455-b79c23b9feac)
 
    Users will have access to the following prompts:
    - View all departments
@@ -48,7 +48,7 @@
    - View department salaries
    - Delete something *note this will take the user to a new menu for deleting
 
-
+  ![tracker3](https://github.com/Bemonn/Employee-Tracker-CMS/assets/132788160/d4c74815-8ee7-487f-b8bd-5442be95d9b2) 
 
    You will be unable to delete a department or role that has other dependencies within it
   
