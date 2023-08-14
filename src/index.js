@@ -2,9 +2,6 @@
 const { mainMenu, addDepartment, addRole, addEmployee } = require('./prompts');
 const db = require('./database');
 
-async function initializeApp() {
-    await db.initializeConnection();
-
 async function runApp() {
     await db.initializeConnection();
     
@@ -43,9 +40,10 @@ async function runApp() {
 
             case 'Add an employee':
                 const employee = await addEmployee();
-                await db.addEmployee(employee.firstName, employee.lastName);
+                await db.addEmployee(employee.firstName, employee.lastName, employee.role, employee.manager);
                 console.log("Employee added successfully!");
                 break;
+
 
             case 'Exit':
                 exit = true;
@@ -57,7 +55,3 @@ async function runApp() {
 }
 
 runApp();
-
-}
-
-initializeApp();

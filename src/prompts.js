@@ -60,6 +60,16 @@ async function addEmployee() {
 
     return inquirer.prompt([
         {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the first name of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the last name of the employee?'
+        },
+        {
             type: 'list',
             name: 'role',
             message: 'What is the employee\'s role?',
