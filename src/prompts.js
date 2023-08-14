@@ -1,6 +1,8 @@
+//Inquirer module to handle user prompts
 const inquirer = require('inquirer');
 const db = require('./database');
 
+//Main menu prompt for the user to select an action
 function mainMenu() {
     return inquirer.prompt([
         {
@@ -23,6 +25,7 @@ function mainMenu() {
     ]);
 }
 
+//Prompt user to select a deletion action from the menu
 function deletionMenu() {
     return inquirer.prompt([
         {
@@ -39,6 +42,7 @@ function deletionMenu() {
     ]);
 }
 
+//Prompt user to provide details for a new department
 function addDepartment() {
     return inquirer.prompt([
         {
@@ -49,6 +53,7 @@ function addDepartment() {
     ]);
 }
 
+//Prompt user to provide details for a new role
 async function addRole() {
     const departments = await db.viewDepartments();
 
@@ -72,6 +77,7 @@ async function addRole() {
     ]);
 }
 
+//Prompt user to provide details for a new employee
 async function addEmployee() {
     const roles = await db.viewRoles();
     const employees = await db.viewEmployees();
@@ -102,6 +108,7 @@ async function addEmployee() {
     ]);
 }
 
+//Prompt user to select an employee and assign a new role
 async function updateEmployeeRole() {
     const roles = await db.viewRoles();
     const employees = await db.viewEmployees();
@@ -122,6 +129,7 @@ async function updateEmployeeRole() {
     ]);
 }
 
+//Prompt user to select a department to delete
 async function deleteDepartmentPrompt() {
     const departments = await db.viewDepartments();
     return inquirer.prompt([
@@ -134,6 +142,7 @@ async function deleteDepartmentPrompt() {
     ]);
 }
 
+//Prompt user to select a role to delete
 async function deleteRolePrompt() {
     const roles = await db.viewRoles();
     return inquirer.prompt([
@@ -146,6 +155,7 @@ async function deleteRolePrompt() {
     ]);
 }
 
+//Prompt user to select an employee to delete
 async function deleteEmployeePrompt() {
     const employees = await db.viewEmployees();
     return inquirer.prompt([
@@ -158,6 +168,7 @@ async function deleteEmployeePrompt() {
     ]);
 }
 
+//Exports the prompt functions for use in other modules
 module.exports = {
     mainMenu,
     addDepartment,
