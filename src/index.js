@@ -49,6 +49,11 @@ async function runApp() {
                 console.log("Employee role updated successfully!");
                 break;
 
+            case 'View department salaries':
+                const departmentSalaries = await db.viewDepartmentSalaries();
+                console.table(departmentSalaries);
+                break;
+
 
             case 'Exit':
                 exit = true;

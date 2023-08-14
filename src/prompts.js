@@ -15,6 +15,7 @@ function mainMenu() {
                 'Add a role',
                 'Add an employee',
                 'Update an employee role',
+                'View department salaries',
                 'Exit'
             ]
         }
