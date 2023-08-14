@@ -1,5 +1,4 @@
-
-const { mainMenu, addDepartment, addRole, addEmployee } = require('./prompts');
+const { mainMenu, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./prompts');
 const db = require('./database');
 
 async function runApp() {
@@ -42,6 +41,12 @@ async function runApp() {
                 const employee = await addEmployee();
                 await db.addEmployee(employee.firstName, employee.lastName, employee.role, employee.manager);
                 console.log("Employee added successfully!");
+                break;
+
+            case 'Update an employee role':
+                const updatedEmployee = await updateEmployeeRole();
+                await db.updateEmployeeRole(updatedEmployee.employee, updatedEmployee.role);
+                console.log("Employee role updated successfully!");
                 break;
 
 
