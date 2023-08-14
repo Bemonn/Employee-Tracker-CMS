@@ -31,7 +31,9 @@ function addDepartment() {
     ]);
 }
 
-function addRole() {
+async function addRole() {
+    const departments = await db.viewDepartments();
+
     return inquirer.prompt([
         {
             type: 'input',
@@ -47,7 +49,7 @@ function addRole() {
             type: 'list',
             name: 'department',
             message: 'Which department does this role belong to?',
-            choices: ['Department 1', 'Department 2']  // Placeholder for now
+            choices: departments.map(dept => ({ name: dept.name, value: dept.id }))
         }
     ]);
 }
