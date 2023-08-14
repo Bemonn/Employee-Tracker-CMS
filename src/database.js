@@ -43,8 +43,19 @@ async function updateEmployeeRole(employeeId, roleId) {
     await connection.execute('UPDATE employee SET role_id = ? WHERE id = ?', [roleId, employeeId]);
 }
 
+async function viewDepartmentSalaries() {
+    const [rows] = await connection.execute(`
+        SELECT department.name AS department, SUM(role.salary) AS total_budget
+        FROM employee
+        JOIN role ON employee.role_id = role.id
+        JOIN department ON role.department_id = department.id
+        GROUP BY department.name
+    `);
+    return rows;
+}
+
 async function closeConnection() {
     await connection.end();
 }
 
-module.exports = { initializeConnection, viewDepartments, addDepartment, viewRoles, addRole, viewEmployees, addEmployee, updateEmployeeRole, closeConnection };
+module.exports = { initializeConnection, viewDepartments, addDepartment, viewRoles, addRole, viewEmployees, addEmployee, updateEmployeeRole, viewDepartmentSalaries, closeConnection };
