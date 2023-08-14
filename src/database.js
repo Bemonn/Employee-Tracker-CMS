@@ -54,8 +54,30 @@ async function viewDepartmentSalaries() {
     return rows;
 }
 
+async function deleteDepartment(id) {
+    const [roles] = await connection.execute('SELECT * FROM role WHERE department_id = ?', [id]);
+    if (roles.length > 0) {
+        throw new Error("Department has associated roles and cannot be deleted.");
+    }
+    await connection.execute('DELETE FROM department WHERE id = ?', [id]);
+}
+
+async function deleteRole(id) {
+    const [employees] = await connection.execute('SELECT * FROM employee WHERE role_id = ?', [id]);
+    if (employees.length > 0) {
+        throw new Error("Role has associated employees and cannot be deleted.");
+    }
+    await connection.execute('DELETE FROM role WHERE id = ?', [id]);
+}
+
+async function deleteEmployee(id) {
+    await connection.execute('DELETE FROM employee WHERE id = ?', [id]);
+}
+
 async function closeConnection() {
     await connection.end();
 }
 
-module.exports = { initializeConnection, viewDepartments, addDepartment, viewRoles, addRole, viewEmployees, addEmployee, updateEmployeeRole, viewDepartmentSalaries, closeConnection };
+module.exports = { initializeConnection, viewDepartments, addDepartment, viewRoles, addRole, viewEmployees, addEmployee, updateEmployeeRole, viewDepartmentSalaries, 
+    deleteDepartment, deleteRole, deleteEmployee, closeConnection 
+};

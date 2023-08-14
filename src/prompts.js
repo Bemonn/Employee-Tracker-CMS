@@ -16,7 +16,24 @@ function mainMenu() {
                 'Add an employee',
                 'Update an employee role',
                 'View department salaries',
+                'Delete something',
                 'Exit'
+            ]
+        }
+    ]);
+}
+
+function deletionMenu() {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'deleteChoice',
+            message: 'What would you like to delete?',
+            choices: [
+                'Delete a department',
+                'Delete a role',
+                'Delete an employee',
+                'Cancel'
             ]
         }
     ]);
@@ -105,10 +122,50 @@ async function updateEmployeeRole() {
     ]);
 }
 
+async function deleteDepartmentPrompt() {
+    const departments = await db.viewDepartments();
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'departmentId',
+            message: 'Which department would you like to delete?',
+            choices: departments.map(dept => ({ name: dept.name, value: dept.id }))
+        }
+    ]);
+}
+
+async function deleteRolePrompt() {
+    const roles = await db.viewRoles();
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'roleId',
+            message: 'Which role would you like to delete?',
+            choices: roles.map(role => ({ name: role.title, value: role.id }))
+        }
+    ]);
+}
+
+async function deleteEmployeePrompt() {
+    const employees = await db.viewEmployees();
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeId',
+            message: 'Which employee would you like to delete?',
+            choices: employees.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
+        }
+    ]);
+}
+
 module.exports = {
     mainMenu,
     addDepartment,
     addRole,
     addEmployee,
-    updateEmployeeRole
+    updateEmployeeRole,
+    deletionMenu,
+    deleteDepartmentPrompt,
+    deleteRolePrompt,
+    deleteEmployeePrompt
 };

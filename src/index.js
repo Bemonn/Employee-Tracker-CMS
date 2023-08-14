@@ -1,4 +1,4 @@
-const { mainMenu, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./prompts');
+const { mainMenu, addDepartment, addRole, addEmployee, updateEmployeeRole, deletionMenu, deleteDepartmentPrompt, deleteRolePrompt, deleteEmployeePrompt } = require('./prompts');
 const db = require('./database');
 
 async function runApp() {
@@ -52,6 +52,45 @@ async function runApp() {
             case 'View department salaries':
                 const departmentSalaries = await db.viewDepartmentSalaries();
                 console.table(departmentSalaries);
+                break;
+
+            case 'Delete something':
+                let continueDeletion = true;
+                while(continueDeletion) {
+                    const { deleteChoice } = await deletionMenu();
+            
+                    switch(deleteChoice) {
+                        case 'Delete a department':
+                            try {
+                            const departmentToDelete = await deleteDepartmentPrompt();
+                            await db.deleteDepartment(departmentToDelete.departmentId);
+                            console.log("Department deleted successfully!");
+                            } catch (error) {
+                            console.error(error.message);
+                            }
+                            break;
+
+                        case 'Delete a role':
+                            try {
+                            const roleToDelete = await deleteRolePrompt();
+                            await db.deleteRole(roleToDelete.roleId);
+                            console.log("Role deleted successfully!");
+                            } catch (error) {
+                            console.error(error.message);
+                            }
+                            break;
+            
+                        case 'Delete an employee':
+                            const employeeToDelete = await deleteEmployeePrompt();
+                            await db.deleteEmployee(employeeToDelete.employeeId);
+                            console.log("Employee deleted successfully!");
+                            break;
+            
+                        case 'Cancel':
+                            continueDeletion = false;
+                            break;
+                    }
+                }
                 break;
 
 
