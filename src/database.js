@@ -5,7 +5,7 @@ let connection;
 
 //Initialize a connection to the MySQL database
 async function initializeConnection() {
-    connection = await mysql.createConnection({ host: 'localhost', user: 'root', password: 'Tb19122001', database: 'CMS' });
+    connection = await mysql.createConnection({ host: 'localhost', user: 'root', password: 'XV18124001', database: 'CMS' });
 }
 
 //Fetches all departments from the database

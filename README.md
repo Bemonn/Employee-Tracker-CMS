@@ -48,7 +48,7 @@
    - View department salaries
    - Delete something *note this will take the user to a new menu for deleting
 
-  ![tracker3](https://github.com/Bemonn/Employee-Tracker-CMS/assets/132788160/d4c74815-8ee7-487f-b8bd-5442be95d9b2) 
+    ![tracker3](https://github.com/Bemonn/Employee-Tracker-CMS/assets/132788160/d4c74815-8ee7-487f-b8bd-5442be95d9b2) 
 
    You will be unable to delete a department or role that has other dependencies within it
   
