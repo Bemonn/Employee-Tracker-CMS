@@ -2,6 +2,9 @@
 const { mainMenu, addDepartment, addRole, addEmployee } = require('./prompts');
 const db = require('./database');
 
+async function initializeApp() {
+    await db.initializeConnection();
+
 async function runApp() {
     await db.initializeConnection();
     
@@ -54,3 +57,7 @@ async function runApp() {
 }
 
 runApp();
+
+}
+
+initializeApp();
